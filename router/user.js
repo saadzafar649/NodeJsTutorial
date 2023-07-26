@@ -6,7 +6,7 @@ const { Op } = require("sequelize");
 router.post("/create", async (req, res) => {
   const { name, email, role, archive } = req.body;
   const roles = ["admin", "owner", "manager"];
-  if (!name || !email || !role || roles.findIndex((r) => r === role) === -1) 
+  if (!name || !email || !role || !roles.includes(role)) 
     return res
       .status(422)
       .json({ error: "please fill all the required fields properly" });
@@ -31,7 +31,7 @@ router.post("/create", async (req, res) => {
 router.patch("/update", async (req, res) => {
   const { name, email, role, archive, newEmail } = req.body;
   const roles = ["admin", "owner", "manager"];
-  if (roles && roles.findIndex((r) => r === role) === -1) 
+  if (role && !roles.includes(role)) 
     return res
       .status(422)
       .json({ error: "role is not correct" });
